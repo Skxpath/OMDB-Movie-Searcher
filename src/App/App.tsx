@@ -1,15 +1,17 @@
-import './App.css';
-import SearchBar from '../Components/SearchBar';
-import MovieInfoGroup from '../Components/MovieInfoGroup';
 import { useState, createContext } from 'react';
 import { MovieProps } from '../Interfaces/Interfaces';
 
-export interface iMovieContext {
+import SearchBar from '../Components/SearchBar';
+import MovieInfoGroup from '../Components/MovieInfoGroup';
+
+import './App.css';
+
+export interface MovieContextInterface {
   movieInfo: MovieProps[];
   setMovieInfo: React.Dispatch<React.SetStateAction<MovieProps[]>>;
 }
 
-export const MovieContext = createContext<iMovieContext>({
+export const MovieContext = createContext<MovieContextInterface>({
   movieInfo: [],
   setMovieInfo: () => { },
 });

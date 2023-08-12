@@ -1,13 +1,13 @@
 import { omdbSearchRequest } from '../Api/omdbRequests';
 import { useState, useContext } from 'react';
-import { MovieContext, iMovieContext } from '../App/App';
+import { MovieContext, MovieContextInterface } from '../App/App';
 import { OmdbSearchParameters, OmdbSearchResults } from '../Interfaces/Interfaces';
 
 function SearchBar() {
     const [movieName, setMovieName] = useState<string>("");
     const [movieYear, setMovieYear] = useState<string>("");
 
-    const { movieInfo, setMovieInfo } = useContext<iMovieContext>(MovieContext);
+    const { movieInfo, setMovieInfo } = useContext<MovieContextInterface>(MovieContext);
 
     const handleMovieNameChange = (e: any) => {
         e.preventDefault();
@@ -19,10 +19,11 @@ function SearchBar() {
         setMovieYear(e.target.value);
     };
 
-    const createSearchParameters = () => {
+    const createSearchParameters = (): OmdbSearchParameters => {
         let params: OmdbSearchParameters = {
             Title: movieName,
         };
+
         if (movieYear !== "") params.Year = movieYear;
 
         return params;
@@ -32,9 +33,11 @@ function SearchBar() {
         let result = await omdbSearchRequest(createSearchParameters()) as OmdbSearchResults;
         console.log("searchForMovies result: ");
         console.log(result);
-        
+
         if (result.Response === "True") {
             setMovieInfo(result.Search);
+        } else {
+            console.log("Error! " + result);
         }
     };
 
@@ -45,7 +48,7 @@ function SearchBar() {
                 placeholder="Search movie by name"
                 onChange={handleMovieNameChange}
                 value={movieName} />
-                <input
+            <input
                 type="movieYear"
                 placeholder="Enter movie year (optional)"
                 onChange={handleMovieYearChange}
