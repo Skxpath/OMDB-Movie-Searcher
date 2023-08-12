@@ -1,14 +1,14 @@
 import MovieComponent from './MovieInfo';
-import { MovieProps } from '../Interfaces/Interfaces';
+import { MovieProps } from '../Types/Types';
 
-function MovieInfoGroup(props: any) {
+function MovieInfoGroup(props: { data: MovieProps[] }) {
     const movieData: MovieProps[] = props.data;
     return (
         <div>
             {movieData.map((movie: MovieProps) => (
-                <div key={movie.Title}><MovieComponent movie={movie}/></div>
-         ))}
-      </div>
+                <div key={movie.imdbID}><MovieComponent movie={movie} /></div>
+            ))}
+        </div>
     );
 }
 

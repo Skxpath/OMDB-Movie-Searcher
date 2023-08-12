@@ -1,12 +1,12 @@
 import { omdbSearchRequest } from '../Api/omdbRequests';
 import { useState, useContext } from 'react';
 import { MovieContext, MovieContextInterface } from '../App/App';
-import { OmdbSearchParameters, OmdbSearchResults } from '../Interfaces/Interfaces';
+import { OmdbSearchParameters, OmdbSearchResults } from '../Types/Types';
 
 function SearchBar() {
     const [movieName, setMovieName] = useState<string>("");
     const [movieYear, setMovieYear] = useState<string>("");
-
+    const [searchStatusText, setSearchStatusText] = useState<string>("Waiting for search...");
     const { movieInfo, setMovieInfo } = useContext<MovieContextInterface>(MovieContext);
 
     const handleMovieNameChange = (e: any) => {
@@ -24,22 +24,32 @@ function SearchBar() {
             Title: movieName,
         };
 
-        if (movieYear !== "") params.Year = movieYear;
+        if (movieYear !== "") {
+            params.Year = movieYear;
+        }
+
+        //Hard coded to currently only display movies
+        params.Type = 'movie';
 
         return params;
     }
 
     const searchForMovies = async () => {
         let result = await omdbSearchRequest(createSearchParameters()) as OmdbSearchResults;
-        console.log("searchForMovies result: ");
         console.log(result);
 
-        if (result.Response === "True") {
+        if (result.Response === "True" && result.Search !== undefined) {
             setMovieInfo(result.Search);
+            setSearchStatusText("Search successful! Total results found: " + result.totalResults);
         } else {
-            console.log("Error! " + result);
+            setSearchStatusText("Error searching movie info - " + result.Error);
         }
     };
+
+    const clearSearchResults = () => {
+        setMovieInfo([]);
+        setSearchStatusText("Cleared search results");
+    }
 
     return (
         <div>
@@ -54,6 +64,8 @@ function SearchBar() {
                 onChange={handleMovieYearChange}
                 value={movieYear} />
             <button onClick={() => searchForMovies()}>Search</button>
+            <button onClick={() => clearSearchResults()}>Clear search results</button>
+            <p>{searchStatusText}</p>
         </div>
     );
 }

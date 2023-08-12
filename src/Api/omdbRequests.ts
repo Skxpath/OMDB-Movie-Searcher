@@ -1,8 +1,6 @@
-import { MovieProps, OmdbSearchResults } from "../Interfaces/Interfaces";
-import { OmdbSearchParameters } from "../Interfaces/Interfaces";
+import { OmdbSearchParameters } from "../Types/Types";
 import config from "../config.json";
 
-const apiKey: string | undefined = process.env.REACT_APP_OMDB_API_KEY;
 const apiUrl: string = config.apiUrl;
 
 const getApiKey = (): string => {
@@ -14,20 +12,26 @@ const getApiKey = (): string => {
     }
 }
 
-const requestParser = (params: OmdbSearchParameters): string => {
+export const omdbSearchRequest = async (params: OmdbSearchParameters) => {
     let requestString: string = apiUrl;
+    let apiKey: string = getApiKey();
 
-    requestString += "?apikey=" + getApiKey();
+    if (apiKey === "") {
+        return {
+            "Response": "False",
+            "Error": "No API key defined in .env!"
+        }
+    }
+
+    requestString += "?apikey=" + apiKey;
+
     if (params.Title) requestString += "&s=" + params.Title;
     if (params.Year) requestString += "&y=" + params.Year;
+    if (params.Type) requestString += "&type=" + params.Type;
 
-    return requestString;
-}
-export const omdbSearchRequest = async <OmdbSearchResults>(params: OmdbSearchParameters): Promise<OmdbSearchResults> => {
-    console.log("omdbSearchRequest: " + params);
-    console.log(apiKey);
-    console.log(requestParser(params));
+    console.log("omdbSearchRequest string: " + requestString);
 
-    let result = await fetch(requestParser(params));
+    const result = await fetch(requestString);
+
     return await result.json();
 }

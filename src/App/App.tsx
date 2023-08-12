@@ -1,5 +1,5 @@
 import { useState, createContext } from 'react';
-import { MovieProps } from '../Interfaces/Interfaces';
+import { MovieProps } from '../Types/Types';
 
 import SearchBar from '../Components/SearchBar';
 import MovieInfoGroup from '../Components/MovieInfoGroup';
@@ -24,11 +24,7 @@ function App() {
   return (
     <div className="App">
       <MovieContext.Provider value={value}>
-        {movieInfo.length <= 0 &&
-          <p>Please search for movie below</p>
-        }
         <SearchBar />
-        <button onClick={() => setMovieInfo([])}>Clear search results</button>
         <MovieInfoGroup data={movieInfo} />
       </MovieContext.Provider>
     </div>

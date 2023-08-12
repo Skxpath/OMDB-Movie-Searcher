@@ -2,7 +2,7 @@
 This project is a bare bones implementation of a web app that queries the omdb api (http://www.omdbapi.com/) for movies. 
 
 Currently supported features:
-- Searching movie by name (optionally include year of movie)
+- Searching movie by name (optionally include year of movie). Displays following information about all movies matching search parameters: Title, Year, imdbID, Poster. Also includes dummy button that can be later used to support displaying a label.
 
 Tech Stack:
 - React
@@ -27,11 +27,8 @@ root:
 /src/Api:
 - omdbRequests - contains requesthandlers to api. Currently only supports searching by name and year
 
-/src/Interfaces:
-- Includes TS types and interfaces to type our components and search requests
-
-/src/DummyData:
-- Mock data used for development purposes
+/src/Types:
+- Includes TS types for our components and search requests
 
 ## Setup
 - Please acquire an api key (http://www.omdbapi.com/apikey.aspx) and create .env file (see .env.example in root) including the key
