@@ -34,8 +34,8 @@ root:
 - Mock data used for development purposes
 
 ## Setup
-Please acquire an api key (http://www.omdbapi.com/apikey.aspx) and create .env file (see .env.example in root) including the key
-You can configure the "apiUrl" in src/config.json (default http://www.omdbapi.com/)
+- Please acquire an api key (http://www.omdbapi.com/apikey.aspx) and create .env file (see .env.example in root) including the key
+- You can configure the "apiUrl" in src/config.json (default http://www.omdbapi.com/)
 
 ## To Run in dev mode
 Inside the root folder:
