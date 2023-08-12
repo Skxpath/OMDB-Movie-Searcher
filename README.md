@@ -1,12 +1,28 @@
 # OMDB Movie Searcher
 This project is a bare bones implementation of a web app that queries the omdb api (http://www.omdbapi.com/) for movies. 
 
+Important Notes:
+- OMDB Api only allows 1000 requests a day with the free version of the api key
+- It will only return first 10 entries in the search (but include totalResults in the payload)
+
 Currently supported features:
-- Searching movie by name (optionally include year of movie). Displays following information about all movies matching search parameters: Title, Year, imdbID, Poster. Also includes dummy button that can be later used to support displaying a label.
+- Searching movie by name (optionally include year of movie).
+- Displays following information about all movies matching search parameters: Title, Year, imdbID, Poster.
+- We currently only support searching for &type=movie - but this can be extended in the future.
+- Includes dummy button that can be later used to support displaying a label.
 
 Tech Stack:
 - React
 - TypeScript
+
+Future nice to have:
+- Add paging to search results (If we had much more than 10, it would be good)
+- Add radio button selection for type to search (movie, series, episode, all)
+- Add search by imdb id or title. Return plot of movie and other details when asking for "more details" of specific movie
+- Cache pre-searched results to prevent spamming api. Similarly add timeouts to calling api on user or server side ("You have recently searched! Please wait a few seconds...")
+- Add unit tests
+- Add css styling
+- The list goes on...
 
 ## Code Structure
 root:
