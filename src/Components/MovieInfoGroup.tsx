@@ -1,8 +1,5 @@
-import dummyData from '../DummyData/dummy.json';
 import MovieComponent from './MovieInfo';
 import { MovieProps } from '../Interfaces/Interfaces';
-
-//const data: MovieProps[] = dummyData.Search;
 
 function MovieInfoGroup(props: any) {
     const movieData: MovieProps[] = props.data;
