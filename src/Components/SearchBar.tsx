@@ -1,7 +1,6 @@
 import { omdbSearchRequest } from '../Api/omdbRequests';
-import { useState, useContext, useEffect, useCallback } from 'react';
-import { MovieContext, MovieContextInterface } from '../App/App';
-import { OmdbSearchParameters, OmdbSearchResults } from '../Types/Types';
+import { useState, useEffect, useCallback } from 'react';
+import { MovieProps, OmdbSearchParameters, OmdbSearchResults } from '../Types/Types';
 
 const createSearchParameters = (movieName: string, movieYear: string): OmdbSearchParameters =>(
     {
@@ -11,11 +10,14 @@ const createSearchParameters = (movieName: string, movieYear: string): OmdbSearc
     }
 );
 
-function SearchBar() {
+type SearchBarProps = {
+    setMovieInfo: React.Dispatch<React.SetStateAction<MovieProps[]>>
+}
+
+function SearchBar({ setMovieInfo }: SearchBarProps) {
     const [movieName, setMovieName] = useState("");
     const [movieYear, setMovieYear] = useState("");
     const [searchStatusText, setSearchStatusText] = useState("Waiting for search...");
-    const { setMovieInfo } = useContext<MovieContextInterface>(MovieContext);
 
     const handleMovieNameChange = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
