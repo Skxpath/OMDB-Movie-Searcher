@@ -1,8 +1,12 @@
 import MovieComponent from './MovieInfo';
 import { MovieProps } from '../Types/Types';
 
-function MovieInfoGroup(props: { data: MovieProps[] }) {
-    const movieData: MovieProps[] = props.data;
+type MovieInfoGroupProps = {
+    data: MovieProps[];
+}
+
+function MovieInfoGroup({ data }: MovieInfoGroupProps) {
+    const movieData: MovieProps[] = data;
     return (
         <div>
             {movieData.map((movie: MovieProps) => (

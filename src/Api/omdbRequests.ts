@@ -13,7 +13,8 @@ const getApiKey = (): string => {
 }
 
 export const omdbSearchRequest = async (params: OmdbSearchParameters) => {
-    let requestString: string = apiUrl;
+    let queryString: URL = new URL(apiUrl);
+
     let apiKey: string = getApiKey();
 
     if (apiKey === "") {
@@ -23,15 +24,13 @@ export const omdbSearchRequest = async (params: OmdbSearchParameters) => {
         }
     }
 
-    requestString += "?apikey=" + apiKey;
+    queryString.searchParams.set('apikey', apiKey);
 
-    if (params.Title) requestString += "&s=" + params.Title;
-    if (params.Year) requestString += "&y=" + params.Year;
-    if (params.Type) requestString += "&type=" + params.Type;
+    if (params.Title) queryString.searchParams.set('s', params.Title);
+    if (params.Year) queryString.searchParams.set('y', params.Year);
+    if (params.Type) queryString.searchParams.set('type', params.Type);
 
-    console.log("omdbSearchRequest string: " + requestString);
-
-    const result = await fetch(requestString);
+    const result = await fetch(queryString);
 
     return await result.json();
 }

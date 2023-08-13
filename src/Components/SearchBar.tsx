@@ -4,19 +4,19 @@ import { MovieContext, MovieContextInterface } from '../App/App';
 import { OmdbSearchParameters, OmdbSearchResults } from '../Types/Types';
 
 function SearchBar() {
-    const [movieName, setMovieName] = useState<string>("");
-    const [movieYear, setMovieYear] = useState<string>("");
-    const [searchStatusText, setSearchStatusText] = useState<string>("Waiting for search...");
+    const [movieName, setMovieName] = useState("");
+    const [movieYear, setMovieYear] = useState("");
+    const [searchStatusText, setSearchStatusText] = useState("Waiting for search...");
     const { movieInfo, setMovieInfo } = useContext<MovieContextInterface>(MovieContext);
 
-    const handleMovieNameChange = (e: any) => {
+    const handleMovieNameChange = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
-        setMovieName(e.target.value);
+        setMovieName(e.currentTarget.value);
     };
 
-    const handleMovieYearChange = (e: any) => {
+    const handleMovieYearChange = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
-        setMovieYear(e.target.value);
+        setMovieYear(e.currentTarget.value);
     };
 
     const createSearchParameters = (): OmdbSearchParameters => {

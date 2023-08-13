@@ -4,8 +4,11 @@ function displayLabel(title: string) {
     console.log("display label for " + title);
 }
 
-function MovieInfo(props: any) {
-    const movie: MovieProps = props.movie;
+type MovieInfoProps = {
+    movie: MovieProps;
+}
+
+function MovieInfo({ movie }: MovieInfoProps) {
     return (
         <div>
             <p>Title: {movie.Title}</p>
