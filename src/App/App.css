@@ -15,7 +15,6 @@
 .movie-info > p :nth-child(2n + 1) {
   font-weight: bold;
 }
-
 .movie-info-group {
   display: flex;
   flex-wrap: wrap;
