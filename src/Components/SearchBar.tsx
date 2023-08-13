@@ -2,7 +2,7 @@ import { omdbSearchRequest } from '../Api/omdbRequests';
 import { useState, useEffect, useCallback } from 'react';
 import { MovieProps, OmdbSearchParameters, OmdbSearchResults } from '../Types/Types';
 
-const createSearchParameters = (movieName: string, movieYear: string): OmdbSearchParameters =>(
+const createSearchParameters = (movieName: string, movieYear: string): OmdbSearchParameters => (
     {
         Title: movieName,
         Type: 'movie',
@@ -38,7 +38,7 @@ function SearchBar({ setMovieInfo }: SearchBarProps) {
         } else {
             setSearchStatusText("Error searching movie info - " + result.Error);
         }
-    },[movieName, movieYear, setMovieInfo]);
+    }, [movieName, movieYear, setMovieInfo]);
 
     const clearSearchResults = () => {
         setMovieInfo([]);
@@ -46,7 +46,7 @@ function SearchBar({ setMovieInfo }: SearchBarProps) {
         setMovieName("");
         setMovieYear("");
     }
-    
+
     useEffect(() => {
         const getData = setTimeout(() => {
             if (movieName) {
