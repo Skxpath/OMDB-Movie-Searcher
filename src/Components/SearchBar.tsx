@@ -3,6 +3,14 @@ import { useState, useContext, useEffect, useCallback } from 'react';
 import { MovieContext, MovieContextInterface } from '../App/App';
 import { OmdbSearchParameters, OmdbSearchResults } from '../Types/Types';
 
+const createSearchParameters = (movieName: string, movieYear: string): OmdbSearchParameters =>(
+    {
+        Title: movieName,
+        Type: 'movie',
+        ...(movieYear ? { Year: movieYear } : {})
+    }
+);
+
 function SearchBar() {
     const [movieName, setMovieName] = useState("");
     const [movieYear, setMovieYear] = useState("");
@@ -19,23 +27,8 @@ function SearchBar() {
         setMovieYear(e.currentTarget.value);
     };
 
-    const createSearchParameters = useCallback((): OmdbSearchParameters => {
-        const params: OmdbSearchParameters = {
-            Title: movieName,
-        };
-
-        if (movieYear) {
-            params.Year = movieYear;
-        }
-
-        //Hard coded to currently only display movies
-        params.Type = 'movie';
-
-        return params;
-    },[movieName, movieYear]);
-
     const searchForMovies = useCallback(async () => {
-        const result = await omdbSearchRequest(createSearchParameters()) as OmdbSearchResults;
+        const result = await omdbSearchRequest(createSearchParameters(movieName, movieYear)) as OmdbSearchResults;
 
         if (result.Response === "True" && result.Search !== undefined) {
             setMovieInfo(result.Search);
@@ -43,7 +36,7 @@ function SearchBar() {
         } else {
             setSearchStatusText("Error searching movie info - " + result.Error);
         }
-    },[createSearchParameters, setMovieInfo]);
+    },[movieName, movieYear, setMovieInfo]);
 
     const clearSearchResults = () => {
         setMovieInfo([]);
