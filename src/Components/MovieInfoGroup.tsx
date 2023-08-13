@@ -1,4 +1,4 @@
-import MovieComponent from './MovieInfo';
+import MovieInfo from './MovieInfo';
 import { MovieProps } from '../Types/Types';
 
 type MovieInfoGroupProps = {
@@ -10,7 +10,7 @@ function MovieInfoGroup({ data }: MovieInfoGroupProps) {
     return (
         <div>
             {movieData.map((movie: MovieProps) => (
-                <div key={movie.imdbID}><MovieComponent movie={movie} /></div>
+                <div key={movie.imdbID}><MovieInfo movie={movie} /></div>
             ))}
         </div>
     );

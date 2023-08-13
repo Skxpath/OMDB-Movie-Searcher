@@ -19,11 +19,9 @@ export const MovieContext = createContext<MovieContextInterface>({
 function App() {
   const [movieInfo, setMovieInfo] = useState<MovieProps[]>([]);
 
-  const value = { movieInfo, setMovieInfo };
-
   return (
     <div className="App">
-      <MovieContext.Provider value={value}>
+      <MovieContext.Provider value={{ movieInfo, setMovieInfo }}>
         <SearchBar />
         <MovieInfoGroup data={movieInfo} />
       </MovieContext.Provider>

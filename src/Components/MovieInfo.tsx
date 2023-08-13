@@ -1,6 +1,6 @@
 import { MovieProps } from '../Types/Types';
 
-function displayLabel(title: string) {
+const displayLabel = (title: string) => {
     console.log("display label for " + title);
 }
 

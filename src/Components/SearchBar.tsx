@@ -1,5 +1,5 @@
 import { omdbSearchRequest } from '../Api/omdbRequests';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect, useCallback } from 'react';
 import { MovieContext, MovieContextInterface } from '../App/App';
 import { OmdbSearchParameters, OmdbSearchResults } from '../Types/Types';
 
@@ -7,7 +7,7 @@ function SearchBar() {
     const [movieName, setMovieName] = useState("");
     const [movieYear, setMovieYear] = useState("");
     const [searchStatusText, setSearchStatusText] = useState("Waiting for search...");
-    const { movieInfo, setMovieInfo } = useContext<MovieContextInterface>(MovieContext);
+    const { setMovieInfo } = useContext<MovieContextInterface>(MovieContext);
 
     const handleMovieNameChange = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -19,12 +19,12 @@ function SearchBar() {
         setMovieYear(e.currentTarget.value);
     };
 
-    const createSearchParameters = (): OmdbSearchParameters => {
-        let params: OmdbSearchParameters = {
+    const createSearchParameters = useCallback((): OmdbSearchParameters => {
+        const params: OmdbSearchParameters = {
             Title: movieName,
         };
 
-        if (movieYear !== "") {
+        if (movieYear) {
             params.Year = movieYear;
         }
 
@@ -32,11 +32,10 @@ function SearchBar() {
         params.Type = 'movie';
 
         return params;
-    }
+    },[movieName, movieYear]);
 
-    const searchForMovies = async () => {
-        let result = await omdbSearchRequest(createSearchParameters()) as OmdbSearchResults;
-        console.log(result);
+    const searchForMovies = useCallback(async () => {
+        const result = await omdbSearchRequest(createSearchParameters()) as OmdbSearchResults;
 
         if (result.Response === "True" && result.Search !== undefined) {
             setMovieInfo(result.Search);
@@ -44,12 +43,26 @@ function SearchBar() {
         } else {
             setSearchStatusText("Error searching movie info - " + result.Error);
         }
-    };
+    },[createSearchParameters, setMovieInfo]);
 
     const clearSearchResults = () => {
         setMovieInfo([]);
         setSearchStatusText("Cleared search results");
+        setMovieName("");
+        setMovieYear("");
     }
+    
+    useEffect(() => {
+        const getData = setTimeout(() => {
+            if (movieName) {
+                searchForMovies();
+            } else {
+                setSearchStatusText("Waiting for search...");
+            }
+        }, 2000)
+
+        return () => clearTimeout(getData);
+    }, [movieName, movieYear, searchForMovies])
 
     return (
         <div>
@@ -63,8 +76,7 @@ function SearchBar() {
                 placeholder="Enter movie year (optional)"
                 onChange={handleMovieYearChange}
                 value={movieYear} />
-            <button onClick={() => searchForMovies()}>Search</button>
-            <button onClick={() => clearSearchResults()}>Clear search results</button>
+            <button onClick={clearSearchResults}>Clear</button>
             <p>{searchStatusText}</p>
         </div>
     );
