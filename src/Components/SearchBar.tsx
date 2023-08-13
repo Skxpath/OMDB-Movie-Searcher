@@ -32,7 +32,7 @@ function SearchBar({ setMovieInfo }: SearchBarProps) {
     const searchForMovies = useCallback(async () => {
         const result = await omdbSearchRequest(createSearchParameters(movieName, movieYear)) as OmdbSearchResults;
 
-        if (result.Response === "True" && result.Search !== undefined) {
+        if (result.Response === "True" && result.Search) {
             setMovieInfo(result.Search);
             setSearchStatusText("Search successful! Total results found: " + result.totalResults);
         } else {

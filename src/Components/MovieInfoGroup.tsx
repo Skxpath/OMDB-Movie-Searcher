@@ -8,7 +8,7 @@ type MovieInfoGroupProps = {
 function MovieInfoGroup({ movieInfo }: MovieInfoGroupProps) {
     const movieData: MovieProps[] = movieInfo;
     return (
-        <div>
+        <div className='movie-info-group'>
             {movieData.map((movie: MovieProps) => (
                 <div key={movie.imdbID}><MovieInfo movie={movie} /></div>
             ))}
