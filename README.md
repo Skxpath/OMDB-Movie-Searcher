@@ -22,6 +22,8 @@ Future nice to have:
 - Cache pre-searched results to prevent spamming api. Similarly add timeouts to calling api on user or server side ("You have recently searched! Please wait a few seconds...")
 - Add unit tests
 - Add css styling
+- Use actual request library instead of fetch()
+- Use actual state management if app gets large enough to require it
 - The list goes on...
 
 ## Code Structure
