@@ -13,7 +13,7 @@ const MOVIE_YEAR_PLACEHOLDER: string = "Enter movie year (optional)";
 
 const TYPE_MOVIE: string = "movie";
 
-let getData: NodeJS.Timeout;
+let searchForMoviesTimer: NodeJS.Timeout;
 
 type SearchBarProps = {
     setMovieInfo: React.Dispatch<React.SetStateAction<MovieProps[]>>
@@ -63,7 +63,7 @@ function SearchBar({ setMovieInfo }: SearchBarProps) {
     }
 
     useEffect(() => {
-         getData = setTimeout(() => {
+        searchForMoviesTimer = setTimeout(() => {
             if (movieName) {
                 setSearchStatusText(SEARCHING);
                 searchForMovies();
@@ -72,12 +72,12 @@ function SearchBar({ setMovieInfo }: SearchBarProps) {
             }
         }, debounceSearchDelay)
 
-        return () => clearTimeout(getData);
+        return () => clearTimeout(searchForMoviesTimer);
     }, [movieName, movieYear, searchForMovies, debounceSearchDelay])
 
     const onSubmitMovieSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        clearTimeout(getData);
+        clearTimeout(searchForMoviesTimer);
         setSearchStatusText(SEARCHING);
         searchForMovies();
     }
