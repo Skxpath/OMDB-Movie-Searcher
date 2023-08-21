@@ -1,6 +1,7 @@
 import { omdbSearchRequest } from '../Api/omdbRequests';
 import { useState, useEffect, useCallback } from 'react';
 import { MovieProps, OmdbSearchParameters, OmdbSearchResults } from '../Types/Types';
+import config from "../config.json";
 
 const createSearchParameters = (movieName: string, movieYear: string): OmdbSearchParameters => (
     {
@@ -18,6 +19,8 @@ function SearchBar({ setMovieInfo }: SearchBarProps) {
     const [movieName, setMovieName] = useState("");
     const [movieYear, setMovieYear] = useState("");
     const [searchStatusText, setSearchStatusText] = useState("Waiting for search...");
+
+    const debounceSearchDelay: number = config.debounceSearchDelay || 2000;
 
     const handleMovieNameChange = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -54,10 +57,10 @@ function SearchBar({ setMovieInfo }: SearchBarProps) {
             } else {
                 setSearchStatusText("Waiting for search...");
             }
-        }, 2000)
+        }, debounceSearchDelay)
 
         return () => clearTimeout(getData);
-    }, [movieName, movieYear, searchForMovies])
+    }, [movieName, movieYear, searchForMovies, debounceSearchDelay])
 
     return (
         <div>

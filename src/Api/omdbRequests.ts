@@ -1,7 +1,7 @@
 import { OmdbSearchParameters } from "../Types/Types";
 import config from "../config.json";
 
-const apiUrl: string = config.apiUrl;
+const apiUrl: string = config.apiUrl || "https://www.omdbapi.com/";
 
 export const omdbSearchRequest = async (params: OmdbSearchParameters) => {
     let queryString: URL = new URL(apiUrl);

@@ -1,3 +1,4 @@
 {
-    "apiUrl": "https://www.omdbapi.com/"
+    "apiUrl": "https://www.omdbapi.com/",
+    "debounceSearchDelay": 2000
 }
